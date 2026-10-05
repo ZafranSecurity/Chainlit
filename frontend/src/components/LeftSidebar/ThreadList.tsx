@@ -107,7 +107,7 @@ export function ThreadList({
   };
 
   const getMonthMap = (
-    locale = navigator.language
+    locale = 'en-US'
   ): { map: Record<string, number>; monthRegex: RegExp } => {
     const map: Record<string, number> = {};
     const monthNames: string[] = [];
@@ -132,9 +132,7 @@ export function ThreadList({
   }>(() => getMonthMap(), []);
 
   const parseGroupLabel = (label: string): ParsedGroupLabel | null => {
-    const locale = navigator.language;
-
-    const matchMonth = label.toLocaleLowerCase(locale).match(monthRegex);
+    const matchMonth = label.toLocaleLowerCase('en-US').match(monthRegex);
     if (!matchMonth) return null;
     const month = matchMonth[0];
 
