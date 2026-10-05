@@ -1,5 +1,9 @@
 import { IThread } from 'src/types';
 
+// The other group labels are hardcoded English, and ThreadList sorts the month
+// groups by parsing English month names, so never follow the browser locale here.
+const GROUP_LABEL_LOCALE = 'en-US';
+
 export const groupByDate = (data: IThread[]) => {
   const groupedData: { [key: string]: IThread[] } = {};
 
@@ -18,8 +22,6 @@ export const groupByDate = (data: IThread[]) => {
       const daysDiff = Math.floor(
         (today.getTime() - threadDate.getTime()) / 86400000
       );
-      const locale = navigator.language;
-
       let category: string;
       if (daysDiff === 0) {
         category = 'Today';
@@ -30,7 +32,7 @@ export const groupByDate = (data: IThread[]) => {
       } else if (daysDiff <= 30) {
         category = 'Previous 30 days';
       } else {
-        category = threadDate.toLocaleString(locale, {
+        category = threadDate.toLocaleString(GROUP_LABEL_LOCALE, {
           month: 'long',
           year: 'numeric'
         });
